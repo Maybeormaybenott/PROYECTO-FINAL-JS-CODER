@@ -169,7 +169,8 @@ div ul li a {
 }
 
 .carrito {
-  float: right;
+  position: fixed;
+  right: 10px;
   border-radius: 1rem;
   color: black;
   margin-top: 30px;
