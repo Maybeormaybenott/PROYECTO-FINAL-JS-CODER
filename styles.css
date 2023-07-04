@@ -178,9 +178,9 @@ div ul li a {
   text-decoration: none;
 }
 
-/*  */
+/*           */
 /* FOOTER  */
-/*  */
+/*           */
 
 footer {
   background-color: #333;
@@ -189,4 +189,30 @@ footer {
   text-align: center;
 }
 
-/* productos PAGINA */
+/* CONTACTO PAGINA */
+
+.formulario {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.boton-enviar {
+  padding: 10px 15px;
+  background-color: #198754;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

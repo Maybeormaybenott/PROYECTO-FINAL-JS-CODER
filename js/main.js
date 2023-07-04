@@ -12,9 +12,7 @@ fetch("./js/arrayProductos.json")
 
 const productosContenedor = document.querySelector("#contenedor-productos");
 const botonesCategorias = document.querySelectorAll(".boton-categoria");
-
 let agregarProductos = document.querySelectorAll(".agregar-producto");
-
 const numeroCarrito = document.querySelector(".numero-carrito");
 
 function cargarProductos(productosSeleccionados) {
@@ -39,9 +37,10 @@ function cargarProductos(productosSeleccionados) {
   });
 
   actualizarBotonesAgregar();
+  actualizarBotonesEliminar();
 }
 
-// CHEQUEAR
+// SELECTOR DE PRODUCTOS
 
 botonesCategorias.forEach((boton) => {
   boton.addEventListener("click", (e) => {
@@ -67,6 +66,14 @@ function actualizarBotonesAgregar() {
   });
 }
 
+function actualizarBotonesEliminar() {
+  const botonesEliminar = document.querySelectorAll(".eliminar-producto");
+
+  botonesEliminar.forEach((boton) => {
+    boton.addEventListener("click", eliminarDelCarrito);
+  });
+}
+
 // CARRITO
 
 let productosCarrito;
@@ -80,6 +87,21 @@ if (productosCarritoLocalStorage) {
 }
 
 function agregarAlCarrito(e) {
+  Toastify({
+    text: "Producto agregado correctamente",
+    duration: 3000,
+    destination: "https://github.com/apvarun/toastify-js",
+    newWindow: true,
+    close: true,
+    gravity: "bottom", // `top` or `bottom`
+    position: "right", // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+    onClick: function () {}, // Callback after click
+  }).showToast();
+
   const id = e.currentTarget.id;
   const productoAgregado = arrayProductos.find(
     (producto) => producto.id === id
@@ -96,6 +118,40 @@ function agregarAlCarrito(e) {
   actualizarNumeroCarrito();
 
   localStorage.setItem("data-carrito", JSON.stringify(productosCarrito));
+}
+
+function eliminarDelCarrito(e) {
+  const id = e.currentTarget.id;
+
+  const indice = productosCarrito.findIndex((producto) => producto.id === id);
+
+  if (indice !== -1) {
+    if (productosCarrito[indice].cantidad > 1) {
+      productosCarrito[indice].cantidad--;
+    } else {
+      productosCarrito.splice(indice, 1);
+    }
+
+    Toastify({
+      text: "Producto eliminado correctamente",
+      duration: 3000,
+      destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      close: true,
+      gravity: "bottom", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      },
+      onClick: function () {}, // Callback after click
+    }).showToast();
+
+    actualizarNumeroCarrito();
+    localStorage.setItem("data-carrito", JSON.stringify(productosCarrito));
+    cargarProductosCarrito();
+    actualizarBotonesEliminar();
+  }
 }
 
 function actualizarNumeroCarrito() {
